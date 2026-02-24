@@ -6,7 +6,7 @@
     </a>
 
     <ul class="nav-links">
-      <li><a (click)="irPara('loja')" style="cursor: pointer;">loja</a></li>
+      <li *ngIf="telaAtual === 'loja'"><a href="#verao">Loja</a></li>
       <li *ngIf="telaAtual === 'loja'"><a href="#sobre">sobre</a></li>
       <li *ngIf="telaAtual === 'loja'"><a href="#footer">ajuda</a></li>
     </ul>
@@ -327,7 +327,7 @@
 </div>
 
 <div class="cart-panel" [class.active]="carrinhoPanelAtivo">
-  <div style="display:flex;justify-content:space-between;align-items:center;">
+  <div style="display:flex;justify-content:space-between;align-items:center;"> 
     <h3>Sacola</h3>
     <button (click)="carrinhoPanelAtivo = false" style="background:none;border:none;font-size:22px;cursor:pointer;" aria-label="Fechar sacola">✕</button>
   </div>

@@ -18,8 +18,8 @@ declare var lucide: any;
 })
 export class AppComponent implements OnInit, AfterViewChecked {
   private cdr = inject(ChangeDetectorRef);
-  private titleService = inject(Title); // <--- ADICIONADO PARA SEO
-  private metaService = inject(Meta);   // <--- ADICIONADO PARA SEO
+  private titleService = inject(Title); 
+  private metaService = inject(Meta);   
 
   // NAVEGAÇÃO
   telaAtual: 'loja' | 'login' | 'comprovante' | 'historico' = 'loja';
@@ -46,20 +46,342 @@ export class AppComponent implements OnInit, AfterViewChecked {
   carregandoHistorico = false;
 
   // --- FILTROS DE CATEGORIA ---
-  categorias = ['Todos', 'Blusa', 'Cropped', 'Calça', 'Shorts', 'Body', 'Vestido', 'Conjunto', 'Saia'];
+  categorias = ['Todos', 'Blusa', 'Cropped', 'Calça', 'Shorts', 'Body', 'Vestido', 'Saia', 'Macacão'];
   categoriaSelecionada = 'Todos';
 
-  // IMAGENS E COLEÇÃO FICTÍCIA AMPLIADA (Com categoria adicionada)
-  produtos = [
-    { nome: "Vestido Tropical Breeze", categoria: "Vestido", precoAntigo: "R$ 204,90", preco: "R$ 189,90", precoNum: 189.90, img: "/img/vestido_tropical.jpg" },
-    { nome: "Conjunto Linho Off-White", categoria: "Conjunto", precoAntigo: "R$ 239,90", preco: "R$ 229,90", precoNum: 229.90, img: "/img/conjunto_linho.jpg" },
-    { nome: "Saia Midi Estampa Floral", categoria: "Saia", precoAntigo: "R$ 189,90", preco: "R$ 159,90", precoNum: 159.90, img: "/img/saia_midi.jpg" },
-    { nome: "Blusa Cropped Amarração", categoria: "Cropped", precoAntigo: "R$ 149,90", preco: "R$ 119,90", precoNum: 119.90, img: "/img/cropped_amarracao.jpg" },
-    { nome: "Calça Pantalona Areia", categoria: "Calça", precoAntigo: "R$ 269,90", preco: "R$ 249,90", precoNum: 249.90, img: "/img/calca_pantalona.jpg" },
-    { nome: "Vestido Longo Pôr do Sol", categoria: "Vestido", precoAntigo: "R$ 294,90", preco: "R$ 279,90", precoNum: 279.90, img: "/img/vestido_longo.jpg" },
-    { nome: "Macacão Viscose Leve", categoria: "Body", precoAntigo: "R$ 239,90", preco: "R$ 219,90", precoNum: 219.90, img: "/img/macacao.jpg" },
-    { nome: "Shorts Alfaiataria Cinto", categoria: "Shorts", precoAntigo: "R$ 159,90", preco: "R$ 139,90", precoNum: 139.90, img: "/img/shorts_alfaiataria.jpg" }
+  // IMAGENS E COLEÇÕES
+  produtos: any[] = [
+    // --- CONJUNTO 1 ---
+    { 
+      nome: "Conjunto Tropical Completo (Camisa + Cropped + Calça)", 
+      categoria: "Conjunto", precoAntigo: "R$ 449,90", preco: "R$ 399,90", precoNum: 399.90, 
+      img: "/produtos/conjunto1.png", esconderNoTodos: false
+    },
+    { 
+      nome: "Camisa Botões Estampa Coqueiros", 
+      categoria: "Blusa", precoAntigo: "R$ 159,90", preco: "R$ 139,90", precoNum: 139.90, 
+      img: "/produtos/conjunto1.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Cropped Básico Off-White", 
+      categoria: "Cropped", precoAntigo: "R$ 89,90", preco: "R$ 79,90", precoNum: 79.90, 
+      img: "/produtos/conjunto9.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Calça Envelope Off-White", 
+      categoria: "Calça", precoAntigo: "R$ 199,90", preco: "R$ 179,90", precoNum: 179.90, 
+      img: "/produtos/conjunto9.png", esconderNoTodos: true 
+    },
+
+    // --- CONJUNTO 2 ---
+    { 
+      nome: "Conjunto Coqueiros (Colete Longo + Calça)", 
+      categoria: "Conjunto", precoAntigo: "R$ 359,90", preco: "R$ 319,90", precoNum: 319.90, 
+      img: "/produtos/conjunto2.png", esconderNoTodos: false
+    },
+    { 
+      nome: "Colete Longo Estampa Coqueiros", 
+      categoria: "Blusa", precoAntigo: "R$ 179,90", preco: "R$ 159,90", precoNum: 159.90, 
+      img: "/produtos/conjunto2.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Calça Reta Estampa Coqueiros", 
+      categoria: "Calça", precoAntigo: "R$ 179,90", preco: "R$ 159,90", precoNum: 159.90, 
+      img: "/produtos/conjunto2.png", esconderNoTodos: true 
+    },
+
+    // --- CONJUNTO 3 ---
+    { 
+      nome: "Vestido Midi Estampa Coqueiros", 
+      categoria: "Vestido", precoAntigo: "R$ 259,90", preco: "R$ 229,90", precoNum: 229.90, 
+      img: "/produtos/conjunto3.png", esconderNoTodos: false
+    },
+
+    // --- CONJUNTOS 4, 5 E 6 ---
+    { 
+      nome: "Camisa de Botões Azul Escura Clássica", 
+      categoria: "Blusa", precoAntigo: "R$ 169,90", preco: "R$ 149,90", precoNum: 149.90, 
+      img: "/produtos/conjunto4.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Saia Palmeiras Transpassada", 
+      categoria: "Saia", precoAntigo: "R$ 199,90", preco: "R$ 179,90", precoNum: 179.90, 
+      img: "/produtos/conjunto4.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Saia Curta Branca com Botões de Pérola", 
+      categoria: "Saia", precoAntigo: "R$ 189,90", preco: "R$ 169,90", precoNum: 169.90, 
+      img: "/produtos/conjunto6.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Shorts de Alfaiataria Azul Escuro Clássico", 
+      categoria: "Shorts", precoAntigo: "R$ 159,90", preco: "R$ 139,90", precoNum: 139.90, 
+      img: "/produtos/conjunto5.png", esconderNoTodos: true 
+    },
+
+    { 
+      nome: "Conjunto Azure Palms com Saia Transpassada (Camisa + Saia)", 
+      categoria: "Conjunto", precoAntigo: "R$ 369,90", preco: "R$ 329,90", precoNum: 329.90, 
+      img: "/produtos/conjunto4.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Conjunto Azure Palms com Shorts (Camisa + Shorts)", 
+      categoria: "Conjunto", precoAntigo: "R$ 329,90", preco: "R$ 289,90", precoNum: 289.90, 
+      img: "/produtos/conjunto5.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Conjunto Azure Palms com Saia de Botões (Camisa + Saia)", 
+      categoria: "Conjunto", precoAntigo: "R$ 359,90", preco: "R$ 319,90", precoNum: 319.90, 
+      img: "/produtos/conjunto6.png", esconderNoTodos: false 
+    },
+
+    // --- CONJUNTOS 7, 8 E 9 ---
+    { 
+      nome: "Vestido Riviera Estampa Costeira (Midi)", 
+      categoria: "Vestido", precoAntigo: "R$ 279,90", preco: "R$ 249,90", precoNum: 249.90, 
+      img: "/produtos/conjunto7.png", esconderNoTodos: false
+    },
+    { 
+      nome: "Macacão Riviera Linho Coastal", 
+      categoria: "Macacão", precoAntigo: "R$ 359,90", preco: "R$ 329,90", precoNum: 329.90, 
+      img: "/produtos/conjunto8.png", esconderNoTodos: false
+    },
+    { 
+      nome: "Conjunto Azure Riviera Off-White (Cropped + Calça)", 
+      categoria: "Conjunto", precoAntigo: "R$ 399,90", preco: "R$ 379,90", precoNum: 379.90, 
+      img: "/produtos/conjunto9.png", esconderNoTodos: false 
+    },
+
+    // --- CONJUNTOS 10, 11, 12 ---
+    { 
+      nome: "Vestido Off-White Mangas Laise Ombro a Ombro", 
+      categoria: "Vestido", precoAntigo: "R$ 289,90", preco: "R$ 259,90", precoNum: 259.90, 
+      img: "/produtos/conjunto10.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Blusa Peplum Laise Off-White", 
+      categoria: "Blusa", precoAntigo: "R$ 159,90", preco: "R$ 139,90", precoNum: 139.90, 
+      img: "/produtos/conjunto11.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Saia Midi Básica Off-White", 
+      categoria: "Saia", precoAntigo: "R$ 189,90", preco: "R$ 169,90", precoNum: 169.90, 
+      img: "/produtos/conjunto11.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Bermuda de Alfaiataria Off-White", 
+      categoria: "Shorts", precoAntigo: "R$ 169,90", preco: "R$ 149,90", precoNum: 149.90, 
+      img: "/produtos/conjunto12.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Conjunto Laise com Saia Midi (Blusa + Saia)", 
+      categoria: "Conjunto", precoAntigo: "R$ 349,80", preco: "R$ 309,80", precoNum: 309.80, 
+      img: "/produtos/conjunto11.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Conjunto Laise com Bermuda (Blusa + Bermuda)", 
+      categoria: "Conjunto", precoAntigo: "R$ 329,80", preco: "R$ 289,80", precoNum: 289.80, 
+      img: "/produtos/conjunto12.png", esconderNoTodos: false 
+    },
+
+    // --- CONJUNTOS 13, 14, 15 ---
+    { 
+      nome: "Camisa de Botões Laranja Manga 3/4", 
+      categoria: "Blusa", precoAntigo: "R$ 169,90", preco: "R$ 149,90", precoNum: 149.90, 
+      img: "/produtos/conjunto13.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Bermuda de Alfaiataria Off-White", 
+      categoria: "Shorts", precoAntigo: "R$ 169,90", preco: "R$ 149,90", precoNum: 149.90, 
+      img: "/produtos/conjunto13.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Cropped Nó Frontal Estampa Floral Laranja", 
+      categoria: "Cropped", precoAntigo: "R$ 119,90", preco: "R$ 99,90", precoNum: 99.90, 
+      img: "/produtos/conjunto14.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Saia Longa Fluida Estampa Floral Laranja", 
+      categoria: "Saia", precoAntigo: "R$ 219,90", preco: "R$ 199,90", precoNum: 199.90, 
+      img: "/produtos/conjunto14.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Conjunto Alfaiataria Sunset (Camisa + Bermuda)", 
+      categoria: "Conjunto", precoAntigo: "R$ 339,80", preco: "R$ 299,80", precoNum: 299.80, 
+      img: "/produtos/conjunto13.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Conjunto Floral Sunset Longo (Cropped + Saia)", 
+      categoria: "Conjunto", precoAntigo: "R$ 339,80", preco: "R$ 299,80", precoNum: 299.80, 
+      img: "/produtos/conjunto14.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Vestido Midi Estampa Floral Sunset", 
+      categoria: "Vestido", precoAntigo: "R$ 269,90", preco: "R$ 249,90", precoNum: 249.90, 
+      img: "/produtos/conjunto15.png", esconderNoTodos: false 
+    },
+
+    // --- CONJUNTOS 16, 17, 18 ---
+    { 
+      nome: "Saia Midi Mostarda Evasê", 
+      categoria: "Saia", precoAntigo: "R$ 199,90", preco: "R$ 179,90", precoNum: 179.90, 
+      img: "/produtos/conjunto16.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Cropped Mostarda com Botões Frontais", 
+      categoria: "Cropped", precoAntigo: "R$ 149,90", preco: "R$ 129,90", precoNum: 129.90, 
+      img: "/produtos/conjunto17.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Camisa Cropped Mostarda Manga Curta", 
+      categoria: "Blusa", precoAntigo: "R$ 169,90", preco: "R$ 149,90", precoNum: 149.90, 
+      img: "/produtos/conjunto18.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Bermuda Shorts Mostarda de Alfaiataria", 
+      categoria: "Shorts", precoAntigo: "R$ 179,90", preco: "R$ 159,90", precoNum: 159.90, 
+      img: "/produtos/conjunto18.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Conjunto Mostarda Floral (Cropped + Saia)", 
+      categoria: "Conjunto", precoAntigo: "R$ 319,80", preco: "R$ 279,80", precoNum: 279.80, 
+      img: "/produtos/conjunto16.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Conjunto Mostarda Elegance (Cropped + Saia)", 
+      categoria: "Conjunto", precoAntigo: "R$ 349,80", preco: "R$ 309,80", precoNum: 309.80, 
+      img: "/produtos/conjunto17.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Conjunto Mostarda Safári (Camisa + Bermuda)", 
+      categoria: "Conjunto", precoAntigo: "R$ 349,80", preco: "R$ 309,80", precoNum: 309.80, 
+      img: "/produtos/conjunto18.png", esconderNoTodos: false 
+    },
+
+    // --- CONJUNTOS 19, 20, 21 ---
+    { 
+      nome: "Regata Branca com Detalhes", 
+      categoria: "Blusa", precoAntigo: "R$ 139,90", preco: "R$ 119,90", precoNum: 119.90, 
+      img: "/produtos/conjunto19.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Calça Pantalona Branca Fluida", 
+      categoria: "Calça", precoAntigo: "R$ 219,90", preco: "R$ 199,90", precoNum: 199.90, 
+      img: "/produtos/conjunto19.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Body Branco Um Ombro Só", 
+      categoria: "Body", precoAntigo: "R$ 119,90", preco: "R$ 99,90", precoNum: 99.90, 
+      img: "/produtos/conjunto20.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Saia Midi Verde Sálvia Lastex", 
+      categoria: "Saia", precoAntigo: "R$ 199,90", preco: "R$ 179,90", precoNum: 179.90, 
+      img: "/produtos/conjunto20.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Conjunto Pantalona Branco (Blusa + Calça)", 
+      categoria: "Conjunto", precoAntigo: "R$ 359,80", preco: "R$ 319,80", precoNum: 319.80, 
+      img: "/produtos/conjunto19.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Conjunto Sálvia Elegance (Body + Saia)", 
+      categoria: "Conjunto", precoAntigo: "R$ 279,80", preco: "R$ 279,80", precoNum: 279.80, 
+      img: "/produtos/conjunto20.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Vestido Midi Verde Sálvia Corset", 
+      categoria: "Vestido", precoAntigo: "R$ 289,90", preco: "R$ 259,90", precoNum: 259.90, 
+      img: "/produtos/conjunto21.png", esconderNoTodos: false 
+    },
+
+    // --- CONJUNTOS 22, 23, 24 ---
+    { 
+      nome: "Vestido Midi Terracota Puff Sleeve", 
+      categoria: "Vestido", precoAntigo: "R$ 299,90", preco: "R$ 269,90", precoNum: 269.90, 
+      img: "/produtos/conjunto22.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Macacão Pantalona Preto Tie Waist", 
+      categoria: "Macacão", precoAntigo: "R$ 369,90", preco: "R$ 339,90", precoNum: 339.90, 
+      img: "/produtos/conjunto23.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Vestido Midi Verde Vibrante Botões", 
+      categoria: "Vestido", precoAntigo: "R$ 319,90", preco: "R$ 289,90", precoNum: 289.90, 
+      img: "/produtos/conjunto24.png", esconderNoTodos: false 
+    },
+
+    // --- CONJUNTOS 25, 26, 27 ---
+    { 
+      nome: "Regata Um Ombro Floral Verde", 
+      categoria: "Blusa", precoAntigo: "R$ 149,90", preco: "R$ 129,90", precoNum: 129.90, 
+      img: "/produtos/conjunto25.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Calça Pantalona Floral Verde Fenda", 
+      categoria: "Calça", precoAntigo: "R$ 219,90", preco: "R$ 199,90", precoNum: 199.90, 
+      img: "/produtos/conjunto25.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Cropped Manga 3/4 Verde Escuro", 
+      categoria: "Cropped", precoAntigo: "R$ 139,90", preco: "R$ 119,90", precoNum: 119.90, 
+      img: "/produtos/conjunto26.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Saia Midi Verde Escuro Três Marias", 
+      categoria: "Saia", precoAntigo: "R$ 199,90", preco: "R$ 179,90", precoNum: 179.90, 
+      img: "/produtos/conjunto26.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Colete Bege com Bordados", 
+      categoria: "Blusa", precoAntigo: "R$ 169,90", preco: "R$ 149,90", precoNum: 149.90, 
+      img: "/produtos/conjunto27.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Conjunto Floral Resort (Regata + Calça)", 
+      categoria: "Conjunto", precoAntigo: "R$ 369,80", preco: "R$ 329,80", precoNum: 329.80, 
+      img: "/produtos/conjunto25.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Conjunto Verde Elegance (Cropped + Saia)", 
+      categoria: "Conjunto", precoAntigo: "R$ 339,80", preco: "R$ 299,80", precoNum: 299.80, 
+      img: "/produtos/conjunto26.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Conjunto Bordado Tropical (Colete + Saia)", 
+      categoria: "Conjunto", precoAntigo: "R$ 369,80", preco: "R$ 329,80", precoNum: 329.80, 
+      img: "/produtos/conjunto27.png", esconderNoTodos: false 
+    },
+
+    // --- CONJUNTOS 28, 29, 30 (Vestidos e Folhagem Outono) ---
+    { 
+      nome: "Vestido Curto Bege Bordado", 
+      categoria: "Vestido", precoAntigo: "R$ 229,90", preco: "R$ 199,90", precoNum: 199.90, 
+      img: "/produtos/conjunto28.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Vestido Midi Estampa Folhagem Outono", 
+      categoria: "Vestido", precoAntigo: "R$ 279,90", preco: "R$ 249,90", precoNum: 249.90, 
+      img: "/produtos/conjunto29.png", esconderNoTodos: false 
+    },
+    { 
+      nome: "Blusa Estampa Folhagem Amarração Frontal", 
+      categoria: "Blusa", precoAntigo: "R$ 149,90", preco: "R$ 129,90", precoNum: 129.90, 
+      img: "/produtos/conjunto30.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Calça Pantalona Estampa Folhagem", 
+      categoria: "Calça", precoAntigo: "R$ 219,90", preco: "R$ 199,90", precoNum: 199.90, 
+      img: "/produtos/conjunto30.png", esconderNoTodos: true 
+    },
+    { 
+      nome: "Conjunto Folhagem Outono (Blusa + Calça)", 
+      categoria: "Conjunto", precoAntigo: "R$ 369,80", preco: "R$ 329,80", precoNum: 329.80, 
+      img: "/produtos/conjunto30.png", esconderNoTodos: false 
+    }
   ];
+  
   tamanhos = ['PP', 'P', 'M', 'G', 'GG'];
 
   modalAtivo = false;
@@ -82,7 +404,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   private auth: any = null;
   private fbUserUid: string | null = null;
 
-  // COLOQUE SUAS CHAVES DO FIREBASE AQUI
   private firebaseConfig = {
     apiKey: "AIzaSyDMlwDoXM0hRIix8K4CXmPeJahrAVud7LA",
     authDomain: "loja-charms.firebaseapp.com",
@@ -93,14 +414,12 @@ export class AppComponent implements OnInit, AfterViewChecked {
   };
 
   async ngOnInit() {
-    // --- INÍCIO CONFIGURAÇÃO SEO ---
     this.titleService.setTitle("Charm's MV Confecções | Moda Feminina");
     this.metaService.addTags([
       { name: 'description', content: 'Fábrica Charm\'s em Mombaça. Peças femininas que unem elegância, conforto e durabilidade real. Conheça nossa coleção.' },
       { name: 'keywords', content: 'moda feminina, roupas femininas, mombaça, vestido, confecção, fábrica de roupas' },
       { name: 'robots', content: 'index, follow' }
     ]);
-    // --- FIM CONFIGURAÇÃO SEO ---
 
     try {
       if (this.firebaseConfig.apiKey !== "SUA_API_KEY") {
@@ -136,11 +455,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   get produtosFiltrados() {
     if (this.categoriaSelecionada === 'Todos') {
-      return this.produtos;
+      return this.produtos.filter(p => !p.esconderNoTodos);
     }
     return this.produtos.filter(p => p.categoria === this.categoriaSelecionada);
   }
-  // ---------------------------
 
   irPara(tela: 'loja' | 'login' | 'comprovante' | 'historico') {
     this.telaAtual = tela;
@@ -240,7 +558,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  // --- MÉTODOS DE EDIÇÃO DE ENDEREÇO ---
   iniciarEdicaoEndereco() {
     this.editBairro = this.usuarioLogado.bairro;
     this.editNumero = this.usuarioLogado.numero;
@@ -254,13 +571,11 @@ export class AppComponent implements OnInit, AfterViewChecked {
       return;
     }
 
-    // Atualiza localmente
     this.usuarioLogado.bairro = this.editBairro;
     this.usuarioLogado.numero = this.editNumero;
     this.usuarioLogado.comp = this.editComp;
     this.editandoEndereco = false;
 
-    // Atualiza no Banco de Dados (Firebase)
     if (this.db) {
       try {
         const docRef = doc(this.db, 'usuarios', this.usuarioLogado.email);
@@ -276,7 +591,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  // --- MÉTODOS DO HISTÓRICO DE COMPRAS ---
   async abrirHistorico() {
     if (!this.usuarioLogado) return;
     this.irPara('historico');
@@ -285,7 +599,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
     if (this.db) {
       try {
-        // Busca todos os pedidos onde o e-mail do cliente é igual ao e-mail logado
         const pedidosRef = collection(this.db, 'pedidos');
         const q = query(pedidosRef, where("clienteEmail", "==", this.usuarioLogado.email));
         const querySnapshot = await getDocs(q);
@@ -295,9 +608,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
           pedidosEncontrados.push({ id: doc.id, ...doc.data() });
         });
 
-        // Ordena para os mais recentes ficarem no topo da lista
         pedidosEncontrados.sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
-        
         this.historicoPedidos = pedidosEncontrados;
       } catch (e) {
         console.error("Erro ao buscar histórico:", e);
@@ -307,7 +618,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.cdr.detectChanges();
   }
 
-  // --- MÉTODOS DE PRODUTO E CARRINHO ---
   abrirModalProduto(produto: any) {
     this.produtoAtual = produto;
     this.quantidade = 1;

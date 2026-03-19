@@ -294,7 +294,12 @@
 
 <div class="modal" [class.active]="modalAtivo" (click)="fecharModalProduto()">
   <div class="modal-box" (click)="$event.stopPropagation()">
-    <img [src]="produtoAtual?.img" onerror="this.src='https://placehold.co/400x500/eaeaea/999?text=Foto+do+Produto'" [alt]="'Ver detalhes de ' + produtoAtual?.nome" style="width: 100%; height: 100%; object-fit: cover;">
+    <button class="modal-close-btn" (click)="fecharModalProduto()" aria-label="Fechar detalhes do produto">✕</button>
+
+    <div class="modal-image-container">
+      <img [src]="produtoAtual?.img" onerror="this.src='https://placehold.co/400x500/eaeaea/999?text=Foto+do+Produto'" [alt]="'Ver detalhes de ' + produtoAtual?.nome">
+    </div>
+
     <div class="modal-info">
       <h3>{{ produtoAtual?.nome }}</h3>
       <p>
@@ -366,7 +371,7 @@
 <div class="custom-popup" [class.active]="popupAtivo">
   <div class="popup-box">
     <p>{{ popupMensagem }}</p>
-    <input type="number" *ngIf="popupInputVisible" [(ngModel)]="popupInputValue" min="1" style="width:100%; padding:8px; margin-bottom:20px; border:1px solid #ddd; border-radius:6px;" aria-label="Digite um valor numérico">
+    <input type="number" *ngIf="popupInputVisible" [(ngModel)]="popupInputValue" min="1" style="width:100%; padding:8px; margin-bottom:20px; border:1px solid #ddd; border-radius:66px;" aria-label="Digite um valor numérico">
     <div class="popup-buttons">
       <button *ngIf="popupCancelVisible" class="btn-outline" (click)="fecharPopup()">Cancelar</button>
       <button class="btn-black" (click)="acaoConfirmar()">Confirmar</button>

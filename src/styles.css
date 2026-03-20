@@ -8,24 +8,19 @@ body{font-family:'Montserrat',sans-serif; background: #fff;}
 .btn-outline { width: 100%; background: transparent; color: #000; border: 1px solid #000; padding: 14px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; letter-spacing: 1px; transition: .3s; }
 .btn-outline:hover { background: #f9f9f9; }
 
+/* BOTAO GOOGLE */
+.google-login-container { margin-top: 20px; text-align: center; }
+.divider { display: flex; align-items: center; justify-content: center; margin: 15px 0; color: #aaa; font-size: 0.8rem; font-weight: 600; }
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: #eee; margin: 0 10px; }
+.btn-google { width: 100%; background: #fff; color: #333; border: 1px solid #ddd; padding: 12px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.9rem; transition: .3s; display: flex; align-items: center; justify-content: center; gap: 10px; border-radius: 4px; }
+.btn-google:hover { background: #f9f9f9; border-color: #ccc; }
+
 /* NAVBAR */
 .navbar{ position:fixed; top:0; width:100%; background:rgba(255,255,255,.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--gray-border); z-index:1000; }
-.container {
-  max-width: 1400px;
-  margin: auto;
-  padding: 15px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
+.container { max-width: 1400px; margin: auto; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
 .logo-box{display:flex;align-items:center;gap:15px;text-decoration:none;color:#000;}
 .brand-name{font-family:'Cormorant Garamond',serif; font-size:1.3rem;}
-.nav-links {
-  display: flex;
-  gap: 35px;
-  list-style: none;
-}
+.nav-links { display: flex; gap: 35px; list-style: none; }
 .nav-links a{ text-decoration:none; color:#000; font-size:.75rem; letter-spacing:2px; text-transform:uppercase; }
 .nav-right{display:flex;align-items:center;gap:20px;justify-self:end;}
 .cart, .user-btn{font-size:.65rem;letter-spacing:1px;text-transform:uppercase; cursor:pointer; display:flex; align-items:center; gap: 6px;}
@@ -39,25 +34,16 @@ body{font-family:'Montserrat',sans-serif; background: #fff;}
 /* CURADORIA */
 .curadoria{padding:80px 40px;background:var(--gray-bg);}
 .curadoria h2{ font-family:'Cormorant Garamond',serif; font-size:3rem; text-align:center; margin-bottom:40px; }
+
+/* BARRA DE BUSCA */
+.busca-container { max-width: 500px; margin: 0 auto 30px auto; display: flex; justify-content: center; padding: 0 20px; }
+.busca-input { width: 100%; padding: 14px 22px; border: 1px solid #000; border-radius: 30px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; outline: none; background: transparent; transition: all 0.3s ease; }
+.busca-input:focus { box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-color: #333; }
+
 .produtos{ display:grid; grid-template-columns:repeat(4,1fr); gap:30px; }
 .card{background:#fff;transition:.3s;cursor:pointer;}
 .card:hover{transform:translateY(-6px);}
-
-/* ---------------------------------------------------- */
-/* CORREÇÃO DEFINITIVA DO CORTE DA IMAGEM NOS CARDS */
-/* ---------------------------------------------------- */
-.card img {
-  width: 100%;
-  height: auto;
-  /* NOVO: Proporção mais alta (9:18 - formato story/celular) garante o produto inteiro */
-  aspect-ratio: 9 / 18; 
-  /* NOVO: contain resolve cortes de calça e cabeça, garantindo que todo o produto apareça sem distorção */
-  object-fit: contain; 
-  background-color: #f9f9f9; /* Fundo suave pra imagem conter sem ficar feio */
-  display: block;
-}
-/* ---------------------------------------------------- */
-
+.card img { width: 100%; max-height: 450px; aspect-ratio: 4 / 5; object-fit: cover; object-position: top; background-color: #f9f9f9; display: block; }
 .card-info{padding:12px 5px;}
 .produto-nome{font-size:.8rem;letter-spacing:1px;margin-bottom:6px;}
 .preco{font-size:.8rem;font-weight:600;}
@@ -134,68 +120,12 @@ body{font-family:'Montserrat',sans-serif; background: #fff;}
 .modal{ position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:2000; }
 .modal.active{display:flex;}
 
-/* ---------------------------------------------------- */
-/* NOVO DESIGN DO MODAL (FLEXBOX E LIMITES DE TAMANHO) */
-/* ---------------------------------------------------- */
-.modal-box{ 
-  background:#fff; 
-  width:900px; 
-  max-width:95%; 
-  /* NOVO: Limita altura geral para não extrapolar tela */
-  max-height: 85vh; 
-  border-radius:12px; 
-  /* NOVO: Flexbox resolve layout pesado do Grid antigo */
-  display:flex; 
-  flex-direction: row;
-  align-items: stretch;
-  overflow:hidden; 
-  position: relative; /* Para posicionamento do botão X */
-}
-
-/* NOVO: Contêiner para a imagem dentro do modal */
-.modal-image-container {
-  flex: 1; /* Ocupa espaço flexível */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #f9f9f9;
-}
-
-.modal-box img {
-  max-height: 100%;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-.modal-info{
-  flex: 1.2; /* Ocupa um pouco mais de espaço que a imagem */
-  padding:35px; 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center;
-  overflow-y: auto; /* Se o conteúdo de info crescer, cria rolagem aqui */
-}
-
-/* NOVO: Botão de fechar (X) - Estilo */
-.modal-close-btn {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: #888;
-  cursor: pointer;
-  z-index: 10;
-  transition: color 0.2s;
-}
-.modal-close-btn:hover {
-  color: #333;
-}
-/* ---------------------------------------------------- */
-
+.modal-box{ background:#fff; width:900px; max-width:95%; max-height: 85vh; border-radius:12px; display:flex; flex-direction: row; align-items: stretch; overflow:hidden; position: relative; }
+.modal-image-container { flex: 1; display: flex; align-items: center; justify-content: center; background-color: #f9f9f9; }
+.modal-box img { max-height: 100%; width: auto; max-width: 100%; object-fit: contain; display: block; }
+.modal-info{ flex: 1.2; padding:35px; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; }
+.modal-close-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; font-size: 24px; color: #888; cursor: pointer; z-index: 10; transition: color 0.2s; }
+.modal-close-btn:hover { color: #333; }
 .modal-info h3{ font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin-bottom: 5px; }
 .modal-info p{ font-weight: 600; font-size: 1.2rem; margin-bottom: 25px; }
 .tamanhos{ display:flex; gap:12px; margin-bottom: 25px; }
@@ -229,26 +159,9 @@ body{font-family:'Montserrat',sans-serif; background: #fff;}
 @media (max-width: 768px) {
   .container { padding: 15px 20px; }
   .produtos { grid-template-columns: repeat(2, 1fr); gap: 15px; } 
-
-  /* ---------------------------------------------------- */
-  /* MODAL MOBILE DEFINITIVO (Quebra limpa para vertical) */
-  /* ---------------------------------------------------- */
-  .modal-box { 
-    flex-direction: column; /* Quebra para vertical no mobile */
-    max-height: 90vh; /* Mantém limite de altura no mobile */
-    overflow-y: auto; /* NOVO: Garante rolagem do modal inteiro, não interno */
-  }
-
-  .modal-image-container {
-    padding: 20px 0; /* Ajusta espaçamento para mobile */
-  }
-
-  .modal-info {
-    padding: 20px; /* Reduz padding no mobile */
-    overflow-y: visible; /* NOVO: Deixa o modal box principal lidar com a rolagem */
-  }
-  /* ---------------------------------------------------- */
-
+  .modal-box { flex-direction: column; max-height: 90vh; overflow-y: auto; }
+  .modal-image-container { padding: 20px 0; }
+  .modal-info { padding: 20px; overflow-y: visible; }
   .cart-panel { width: 100%; right: -100%; }
   .auth-box, .receipt-box { padding: 30px 20px; border: none; box-shadow: none; } 
 }

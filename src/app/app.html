@@ -59,16 +59,21 @@
         Nenhum produto encontrado.
       </div>
       
-      <div class="card" *ngFor="let prod of produtosFiltrados" (click)="abrirModalProduto(prod)">
-        <img [src]="prod.img" onerror="this.src='https://placehold.co/400x500/eaeaea/999?text=Foto+do+Produto'" [alt]="'Fotografia de ' + prod.nome">
-        <div class="card-info">
-          <p class="produto-nome">{{ prod.nome }}</p>
-          <p class="preco">
-            <span style="text-decoration: line-through; color: #999; font-size: 0.85em; margin-right: 6px;">{{ prod.precoAntigo }}</span>
-            <span style="color: #d93025; font-weight: 700;">{{ prod.preco }}</span>
-          </p>
+      <ng-container *ngFor="let prod of produtosFiltrados">
+         <div class="card" *ngIf="prod.estoque > 0" (click)="abrirPaginaProduto(prod)">
+          <img [src]="prod.img" 
+               [ngClass]="{'foco-pernas': prod.categoria === 'Calça' || prod.categoria === 'Shorts' || prod.categoria === 'Saia'}"
+               onerror="this.src='https://placehold.co/400x500/eaeaea/999?text=Foto+do+Produto'" 
+               [alt]="'Fotografia de ' + prod.nome">
+          <div class="card-info">
+            <p class="produto-nome">{{ prod.nome }}</p>
+            <p class="preco">
+              <span style="text-decoration: line-through; color: #999; font-size: 0.85em; margin-right: 6px;">{{ prod.precoAntigo }}</span>
+              <span style="color: #d93025; font-weight: 700;">{{ prod.preco }}</span>
+            </p>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   </section>
 
@@ -96,16 +101,16 @@
       <div>
         <h4>ATENDIMENTO</h4>
         <a href="#trocas" (click)="abrirAviso('trocas'); $event.preventDefault()">
-          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21v-5h5"/></svg>
-          Trocas e devoluções
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21v-5h5"/></svg>
+          <span style="text-align: left;">Trocas e<br>devoluções</span>
         </a>
         <a href="#envios" (click)="abrirAviso('envios'); $event.preventDefault()">
-          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><rect width="16" height="13" x="4" y="8" rx="2" ry="2"/><path d="M3 8v1a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8"/><path d="m3 8 2-3h14l2 3"/></svg>
-          Envios
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="13" x="4" y="8" rx="2" ry="2"/><path d="M3 8v1a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8"/><path d="m3 8 2-3h14l2 3"/></svg>
+          <span style="text-align: left;">Envios</span>
         </a>
         <a href="https://wa.me/5588998645155" target="_blank" rel="noopener noreferrer">
-          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
-          Suporte
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+          <span style="text-align: left;">Suporte</span>
         </a>
       </div>
 
@@ -136,10 +141,10 @@
       <div class="avatar-circle">
         {{ usuarioLogado.email.charAt(0).toUpperCase() }}
       </div>
-      <h2>Olá, bem-vinda de volta!</h2>
+      <h2>{{ isAdmin ? 'Painel de Acesso' : 'Olá, bem-vinda de volta!' }}</h2>
       <p>{{ usuarioLogado.email }}</p>
       
-      <div class="user-details" style="position: relative;">
+      <div class="user-details" style="position: relative;" *ngIf="!isAdmin">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
           <p style="margin:0;"><strong>Meus Dados:</strong></p>
           <button *ngIf="!editandoEndereco" (click)="iniciarEdicaoEndereco()" style="background:none; border:none; color:#555; cursor:pointer; text-decoration:underline; font-size: 0.8rem;" aria-label="Editar Dados">Editar</button>
@@ -165,8 +170,9 @@
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 25px;">
+        <button *ngIf="isAdmin" class="btn-black" style="background: #1e8e3e; border-color: #1e8e3e;" (click)="irPara('admin')">Painel do Administrador</button>
         <button class="btn-black" (click)="irPara('loja')">Voltar para a Loja</button>
-        <button class="btn-outline" (click)="abrirHistorico()">Meus Pedidos</button>
+        <button *ngIf="!isAdmin" class="btn-outline" (click)="abrirHistorico()">Meus Pedidos</button>
         <button class="btn-outline" style="border-color: #eee; color: #666;" (click)="fazerLogout()">Sair da Conta</button>
       </div>
     </div>
@@ -216,7 +222,7 @@
 
         <div class="input-group">
           <label>Senha</label>
-          <input type="password" name="senha" [(ngModel)]="authSenha" placeholder="Sua senha secreta" required autocomplete="current-password">
+          <input type="password" name="senha" [(ngModel)]="authSenha" placeholder="Sua senha" required autocomplete="current-password">
         </div>
 
         <div class="register-fields" *ngIf="modoAuth === 'cadastro'">
@@ -271,13 +277,109 @@
   </div>
 </div>
 
+<div *ngIf="telaAtual === 'admin'" class="auth-section">
+  
+  <div class="auth-box" style="max-width: 900px; width: 90%; padding: 40px;" *ngIf="modoAdmin === 'lista'">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+       <h2>Gerenciar Estoque</h2>
+       <button class="btn-black" style="width: auto; padding: 10px 20px; background: #1e8e3e; border-color: #1e8e3e;" (click)="abrirCadastroAdmin()">+ Novo Produto</button>
+    </div>
+    
+    <input type="text" [(ngModel)]="termoBuscaAdmin" placeholder="Buscar produto para editar..." style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; font-family: 'Montserrat', sans-serif;">
+    
+    <div style="overflow-x: auto;">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Foto</th>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Estoque</th>
+            <th>Preço</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prod of produtosAdminFiltrados">
+            <td>{{ prod.id }}</td>
+            <td><img [src]="prod.img" style="width: 40px; height: 50px; object-fit: cover; border-radius: 4px;" onerror="this.src='https://placehold.co/40x50/eaeaea/999'"></td>
+            <td style="font-weight: 500;">{{ prod.nome }}</td>
+            <td>{{ prod.categoria }}</td>
+            <td [ngStyle]="{'color': prod.estoque === 0 ? '#d93025' : '#1e8e3e', 'font-weight': 'bold'}">{{ prod.estoque }}</td>
+            <td>{{ prod.preco }}</td>
+            <td style="min-width: 130px;">
+               <button (click)="abrirEdicaoAdmin(prod)" style="background:none; border:none; cursor:pointer; color:#000; text-decoration:underline; margin-right: 10px; font-size: 0.8rem;">Editar</button>
+               <button (click)="excluirProduto(prod.id)" style="background:none; border:none; cursor:pointer; color:#d93025; text-decoration:underline; font-size: 0.8rem;">Excluir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn-outline" style="margin-top: 30px;" (click)="irPara('login')">Voltar ao Meu Perfil</button>
+  </div>
+
+  <div class="auth-box" style="max-width: 600px;" *ngIf="modoAdmin === 'formulario'">
+    <h2>{{ produtoEditandoId ? 'Editar Produto' : 'Cadastrar Produto' }}</h2>
+    <p class="auth-subtitle">Preencha as informações abaixo</p>
+    
+    <div class="input-group">
+      <label>Nome do Produto</label>
+      <input type="text" [(ngModel)]="novoProduto.nome" placeholder="Ex: Vestido Floral Midi">
+    </div>
+
+    <div class="input-row">
+      <div class="input-group" style="flex: 1;">
+        <label>Categoria</label>
+        <select [(ngModel)]="novoProduto.categoria" style="width: 100%; padding: 14px; border: 1px solid #ddd; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; background: #fff;">
+          <option *ngFor="let cat of categorias | slice:1" [value]="cat">{{ cat }}</option>
+        </select>
+      </div>
+      <div class="input-group" style="flex: 1;">
+        <label>Estoque Disponível</label>
+        <input type="number" [(ngModel)]="novoProduto.estoque" placeholder="Ex: 10">
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Tamanhos (separados por vírgula)</label>
+      <input type="text" [(ngModel)]="novoProduto.tamanhos" placeholder="PP, P, M, G, GG">
+    </div>
+
+    <div class="input-row">
+      <div class="input-group" style="flex: 1;">
+        <label>Preço Atual (R$)</label>
+        <input type="number" [(ngModel)]="novoProduto.preco" placeholder="Ex: 149.90">
+      </div>
+      <div class="input-group" style="flex: 1;">
+        <label>Preço Antigo (R$) - Opcional</label>
+        <input type="number" [(ngModel)]="novoProduto.precoAntigo" placeholder="Ex: 199.90">
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>URL da Imagem Principal</label>
+      <input type="text" [(ngModel)]="novoProduto.img" placeholder="Ex: /produtos/nova-foto.png ou link da internet">
+    </div>
+
+    <div class="input-group">
+      <label>Imagens Extras (Separe as URLs por vírgula)</label>
+      <textarea [(ngModel)]="novoProduto.fotosExtras" placeholder="/produtos/foto2.png, /produtos/foto3.png" style="width: 100%; padding: 14px; border: 1px solid #ddd; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; resize: vertical; min-height: 80px;"></textarea>
+    </div>
+
+    <div style="display: flex; gap: 15px;">
+      <button class="btn-outline" (click)="voltarParaListaAdmin()">Cancelar</button>
+      <button class="btn-black" style="background: #1e8e3e; border-color: #1e8e3e;" (click)="salvarProduto()">{{ produtoEditandoId ? 'Atualizar Produto' : 'Salvar Produto' }}</button>
+    </div>
+  </div>
+</div>
+
 <div *ngIf="telaAtual === 'comprovante'" class="receipt-section">
-  <div class="receipt-box">
+  <div class="receipt-box" style="max-width: 600px;">
+    
     <div class="receipt-header">
       <img src="/img/logo_charms.png" onerror="this.src='https://placehold.co/100x40/000000/ffffff?text=CHARMS'" alt="Logo" style="height: 35px; margin-bottom: 15px;">
-      <h2>COMPROVANTE DE PEDIDO</h2>
-      <p>Data: {{ pedidoRecente?.data | date:'dd/MM/yyyy HH:mm' }}</p>
-      <p style="font-size: 0.7rem; color: #1e8e3e; margin-top: 5px;">Pedido salvo no banco de dados da loja!</p>
+      <h2>RESUMO DO PEDIDO</h2>
     </div>
     
     <div class="receipt-body">
@@ -299,17 +401,61 @@
         <span>PREÇO TOTAL</span>
         <strong>{{ pedidoRecente?.totalFormatado }}</strong>
       </div>
+      
+      <div class="payment-gateway" *ngIf="pedidoRecente?.status === 'Aguardando Pagamento'">
+        <h3 style="margin-bottom: 15px; text-align: center; border-top: 1px solid #eee; padding-top: 20px; font-size: 1.1rem;">Como você prefere pagar?</h3>
 
-      <div class="receipt-delivery">
-        <h4>LOCAL PARA ENTREGA</h4>
-        <p>Aos cuidados de: <strong>{{ usuarioLogado?.email }}</strong> (Tel: {{ usuarioLogado?.telefone }})</p>
-        <p>{{ usuarioLogado?.bairro }}, Nº {{ usuarioLogado?.numero }}</p>
-        <p *ngIf="usuarioLogado?.comp">Complemento: {{ usuarioLogado?.comp }}</p>
-        <div class="status-badge">Aguardando Pagamento</div>
+        <div class="payment-tabs">
+          <button [class.active]="metodoPagamentoSelecionado === 'pix'" (click)="metodoPagamentoSelecionado = 'pix'">PIX</button>
+          <button [class.active]="metodoPagamentoSelecionado === 'cartao'" (click)="metodoPagamentoSelecionado = 'cartao'">Cartão de Crédito</button>
+        </div>
+
+        <div *ngIf="metodoPagamentoSelecionado === 'pix'" class="payment-content" style="text-align: center;">
+          <p style="font-size: 0.85rem; color: #555; margin-bottom: 15px;">Escaneie o QR Code ou copie a chave para pagar <strong>{{ pedidoRecente?.totalFormatado }}</strong></p>
+          <img src="https://placehold.co/150x150/f9f9f9/333?text=QR+CODE+PIX" alt="QR Code PIX" style="border-radius: 8px; margin-bottom: 15px; border: 1px solid #ddd;">
+          
+          <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <input type="text" readonly value="0002012636br.gov.bcb.pix0114+5588996359190..." style="flex: 1; padding: 10px; border: 1px solid #ccc; background: #f9f9f9; font-size: 0.8rem; border-radius: 4px; color: #666; outline: none;">
+            <button class="btn-outline" style="width: auto; padding: 10px 15px; border-radius: 4px; font-size: 0.8rem;">Copiar</button>
+          </div>
+          
+          <button class="btn-black" style="background: #1e8e3e; border-color: #1e8e3e;" (click)="simularPagamento()">Simular Pagamento Aprovado</button>
+        </div>
+
+        <div *ngIf="metodoPagamentoSelecionado === 'cartao'" class="payment-content">
+          <div class="input-group">
+            <label>Número do Cartão</label>
+            <input type="text" placeholder="0000 0000 0000 0000" style="background: #f9f9f9;">
+          </div>
+          <div class="input-group">
+            <label>Nome impresso no cartão</label>
+            <input type="text" placeholder="Ex: MARIA DA SILVA" style="background: #f9f9f9;">
+          </div>
+          <div class="input-row">
+            <div class="input-group" style="flex: 1;">
+              <label>Validade</label>
+              <input type="text" placeholder="MM/AA" style="background: #f9f9f9;">
+            </div>
+            <div class="input-group" style="flex: 1;">
+              <label>CVV</label>
+              <input type="text" placeholder="123" style="background: #f9f9f9;">
+            </div>
+          </div>
+          <button class="btn-black" style="background: #1e8e3e; border-color: #1e8e3e; margin-top: 10px;" (click)="simularPagamento()">Pagar {{ pedidoRecente?.totalFormatado }}</button>
+        </div>
       </div>
+      
+      <div *ngIf="pedidoRecente?.status === 'Pagamento Aprovado'" style="text-align: center; border-top: 1px solid #eee; padding-top: 25px; margin-top: 20px; animation: fadeIn 0.5s ease;">
+        <div style="width: 60px; height: 60px; background: #d4edda; color: #155724; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 2rem;">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h3 style="color: #1e8e3e; margin-bottom: 10px;">Pagamento Confirmado!</h3>
+        <p style="font-size: 0.85rem; color: #555; line-height: 1.5;">Seu pedido já está sendo separado para envio.<br>Entregaremos para: <strong>{{ usuarioLogado?.bairro }}, Nº {{ usuarioLogado?.numero }}</strong></p>
+      </div>
+
     </div>
 
-    <button class="btn-black" style="margin-top: 30px;" (click)="irPara('loja')">Voltar para a Loja</button>
+    <button class="btn-outline" style="margin-top: 30px; border-color: #eee;" (click)="irPara('loja')">Voltar para a Loja</button>
   </div>
 </div>
 
@@ -333,7 +479,9 @@
       <div *ngFor="let pedido of historicoPedidos" class="pedido-card">
         <div class="pedido-card-header">
           <strong>Em: {{ pedido.data | date:'dd/MM/yyyy HH:mm' }}</strong>
-          <span class="status-badge" style="margin: 0;">{{ pedido.status || 'Processando' }}</span>
+          <span class="status-badge" [ngStyle]="{'background': pedido.status === 'Pagamento Aprovado' ? '#d4edda' : '#fff3cd', 'color': pedido.status === 'Pagamento Aprovado' ? '#155724' : '#856404'}" style="margin: 0;">
+            {{ pedido.status || 'Processando' }}
+          </span>
         </div>
         
         <div *ngFor="let item of pedido.itens" class="pedido-item-row">
@@ -352,33 +500,63 @@
   </div>
 </div>
 
+<div *ngIf="telaAtual === 'produto'" class="produto-page-container">
+  
+  <div class="breadcrumb">
+    <a (click)="irPara('loja')" style="cursor:pointer;" aria-label="Voltar para loja">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Voltar para a loja
+    </a>
+  </div>
+  
+  <div class="produto-page-content">
+    
+    <div class="produto-image-col">
+      <div class="thumbnails-container" *ngIf="produtoAtual?.fotosExtras?.length > 0">
+         <img class="thumbnail" 
+              [class.active]="fotoAtiva === produtoAtual?.img"
+              [src]="produtoAtual?.img" 
+              (click)="mudarFotoAtiva(produtoAtual?.img)"
+              onerror="this.style.display='none'">
+         
+         <img *ngFor="let foto of produtoAtual?.fotosExtras" 
+              class="thumbnail"
+              [class.active]="fotoAtiva === foto"
+              [src]="foto" 
+              (click)="mudarFotoAtiva(foto)"
+              onerror="this.style.display='none'">
+      </div>
 
-<div class="modal" [class.active]="modalAtivo" (click)="fecharModalProduto()">
-  <div class="modal-box" (click)="$event.stopPropagation()">
-    <button class="modal-close-btn" (click)="fecharModalProduto()" aria-label="Fechar detalhes do produto">✕</button>
-
-    <div class="modal-image-container">
-      <img [src]="produtoAtual?.img" onerror="this.src='https://placehold.co/400x500/eaeaea/999?text=Foto+do+Produto'" [alt]="'Ver detalhes de ' + produtoAtual?.nome">
+      <img class="produto-foto-card" 
+           [ngClass]="{'foco-pernas': produtoAtual?.categoria === 'Calça' || produtoAtual?.categoria === 'Shorts' || produtoAtual?.categoria === 'Saia'}"
+           [src]="fotoAtiva" 
+           onerror="this.src='https://placehold.co/600x800/eaeaea/999?text=Foto+do+Produto'" 
+           [alt]="'Ver detalhes de ' + produtoAtual?.nome">
     </div>
 
-    <div class="modal-info">
-      <h3>{{ produtoAtual?.nome }}</h3>
-      <p>
-        <span style="text-decoration: line-through; color: #999; font-size: 0.85em; margin-right: 6px;">{{ produtoAtual?.precoAntigo }}</span>
-        <span style="color: #d93025; font-weight: 700;">{{ produtoAtual?.preco }}</span>
+    <div class="produto-info-col">
+      <span class="produto-categoria">{{ produtoAtual?.categoria }}</span>
+      <h1>{{ produtoAtual?.nome }}</h1>
+      <p class="produto-preco-wrapper">
+        <span class="preco-antigo" *ngIf="produtoAtual?.precoAntigo">{{ produtoAtual?.precoAntigo }}</span>
+        <span class="preco-atual">{{ produtoAtual?.preco }}</span>
       </p>
 
-      <label style="font-size: 0.7rem; letter-spacing: 1px; margin-bottom: 10px; display: block;">TAMANHO</label>
+      <p *ngIf="produtoAtual?.estoque > 0" style="color: #1e8e3e; font-size: 0.85rem; margin-bottom: 15px; font-weight: 600;">
+        Em estoque: {{ produtoAtual?.estoque }} peças
+      </p>
+
+      <label class="info-label">TAMANHO</label>
       <div class="tamanhos">
         <div class="tamanho" 
-             *ngFor="let tam of tamanhos" 
+             *ngFor="let tam of (produtoAtual?.tamanhos || tamanhosPadrao)" 
              [class.ativo]="tamanhoSelecionado === tam"
              (click)="selecionarTamanho(tam)">
           {{ tam }}
         </div>
       </div>
 
-      <label style="font-size: 0.7rem; letter-spacing: 1px; margin-bottom: 10px; display: block;">QUANTIDADE</label>
+      <label class="info-label">QUANTIDADE</label>
       <div class="selector-qtd">
         <div class="qtd-box">
           <button class="qtd-btn" (click)="alterarQuantidade(-1)" aria-label="Diminuir quantidade">-</button>
@@ -387,13 +565,17 @@
         </div>
       </div>
 
-      <button class="btn-black" style="border-radius:30px; padding:18px;" (click)="adicionarAoCarrinho()">Incluir na sacola</button>
+      <button class="btn-black btn-comprar" (click)="adicionarAoCarrinho()">Incluir na sacola</button>
+      
+      <div class="produto-desc">
+         <p>Peça desenvolvida pela Charm's MV Confecções. Cada detalhe foi pensado para unir elegância, conforto e um acabamento premium. Modelagem precisa e tecido selecionado para garantir o caimento perfeito no seu corpo.</p>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="cart-panel" [class.active]="carrinhoPanelAtivo">
-  <div style="display:flex;justify-content:space-between;align-items:center;"> 
+  <div style="display:flex;justify-content:space-between;align-items:center;">
     <h3>Sacola</h3>
     <button (click)="carrinhoPanelAtivo = false" style="background:none;border:none;font-size:22px;cursor:pointer;" aria-label="Fechar sacola">✕</button>
   </div>
@@ -403,7 +585,7 @@
     <div class="cart-item" *ngFor="let item of carrinho; let i = index">
       <strong>{{ item.nome }}</strong><br>
       Tamanho: {{ item.tamanho }}<br>
-      Quantidade: {{ item.qtd }}x — {{ item.precoStr }}<br> 
+      Quantidade: {{ item.qtd }}x — {{ item.precoStr }}<br>
       
       <div style="margin-top:10px; display:flex; gap:15px; align-items:center;">
         <span (click)="editarQuantidade(i)" style="cursor:pointer; color:#555; display: flex; align-items: center; gap: 4px; font-size: 0.8rem;" aria-label="Editar item">

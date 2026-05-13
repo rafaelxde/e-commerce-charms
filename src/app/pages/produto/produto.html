@@ -1,0 +1,72 @@
+<div class="produto-page-container">
+  <div class="breadcrumb">
+    <a (click)="voltarParaLoja()" style="cursor:pointer;" aria-label="Voltar para loja">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 5px;"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Voltar para a loja
+    </a>
+  </div>
+  
+  <div class="produto-page-content" *ngIf="state.produtoAtual">
+    <div class="produto-image-col">
+      <div class="thumbnails-container" *ngIf="state.produtoAtual.fotosExtras?.length > 0">
+         <img class="thumbnail" 
+              [class.active]="fotoAtiva === state.produtoAtual.img"
+              [src]="state.produtoAtual.img" 
+              (click)="mudarFotoAtiva(state.produtoAtual.img)"
+              onerror="this.style.display='none'">
+         
+         <img *ngFor="let foto of state.produtoAtual.fotosExtras" 
+              class="thumbnail"
+              [class.active]="fotoAtiva === foto"
+              [src]="foto" 
+              (click)="mudarFotoAtiva(foto)"
+              onerror="this.style.display='none'">
+      </div>
+
+      <img class="produto-foto-card" 
+           [ngClass]="{'foco-pernas': state.produtoAtual.categoria === 'Calça' || state.produtoAtual.categoria === 'Shorts' || state.produtoAtual.categoria === 'Saia'}"
+           [src]="fotoAtiva" 
+           onerror="this.src='https://placehold.co/600x800/eaeaea/999?text=Foto+do+Produto'" 
+           [alt]="'Ver detalhes de ' + state.produtoAtual.nome">
+    </div>
+
+    <div class="produto-info-col">
+      <span class="produto-categoria">{{ state.produtoAtual.categoria }}</span>
+      <h1>{{ state.produtoAtual.nome }}</h1>
+      
+      <p class="produto-preco-wrapper">
+        <span class="preco-antigo" *ngIf="state.produtoAtual.precoAntigo">{{ state.produtoAtual.precoAntigo }}</span>
+        <span class="preco-atual">{{ state.produtoAtual.precoExibicao || state.produtoAtual.preco }}</span>
+      </p>
+
+      <p *ngIf="state.produtoAtual.estoque > 0" style="color: #1e8e3e; font-size: 0.85rem; margin-bottom: 15px; font-weight: 600;">
+        Em estoque: {{ state.produtoAtual.estoque }} peças
+      </p>
+
+      <label class="info-label">TAMANHO</label>
+      <div class="tamanhos">
+        <div class="tamanho" 
+             *ngFor="let tam of (state.produtoAtual.tamanhos || tamanhosPadrao)" 
+             [class.ativo]="tamanhoSelecionado === tam"
+             (click)="selecionarTamanho(tam)">
+          {{ tam }}
+        </div>
+      </div>
+
+      <label class="info-label">QUANTIDADE</label>
+      <div class="selector-qtd">
+        <div class="qtd-box">
+          <button class="qtd-btn" (click)="alterarQuantidade(-1)">-</button>
+          <span>{{ quantidade }}</span>
+          <button class="qtd-btn" (click)="alterarQuantidade(1)">+</button>
+        </div>
+      </div>
+
+      <button class="btn-black btn-comprar" (click)="adicionarAoCarrinho()">Incluir na sacola</button>
+      
+      <div class="produto-desc">
+         <p>Peça desenvolvida pela Charm's MV Confecções. Cada detalhe foi pensado para unir elegância, conforto e um acabamento premium. Modelagem precisa e tecido selecionado para garantir o caimento perfeito no seu corpo.</p>
+      </div>
+    </div>
+  </div>
+</div>

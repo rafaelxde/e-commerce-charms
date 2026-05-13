@@ -1,0 +1,88 @@
+<div class="receipt-section">
+  <div class="receipt-box" style="max-width: 600px;">
+    <div class="receipt-header">
+      <img src="/img/logo_charms.png" onerror="this.src='https://placehold.co/100x40/000000/ffffff?text=CHARMS'" alt="Logo" style="height: 35px; margin-bottom: 15px;">
+      <h2>RESUMO DO PEDIDO</h2>
+    </div>
+    
+    <div class="receipt-body">
+      <div class="receipt-items">
+        <div class="r-item-header">
+          <span>Roupas Escolhidas</span>
+          <span>Subtotal</span>
+        </div>
+        <div class="r-item" *ngFor="let item of pedidoRecente?.itens">
+          <div class="r-item-info">
+            <strong>{{ item.qtd }}x {{ item.nome }}</strong>
+            <span class="r-item-tam">Tamanho: {{ item.tamanho }}</span>
+          </div>
+          <span>{{ item.precoStr }}</span>
+        </div>
+      </div>
+
+      <div class="receipt-total">
+        <span>PREÇO TOTAL</span>
+        <strong>{{ pedidoRecente?.totalFormatado }}</strong>
+      </div>
+      
+      <div class="payment-gateway" *ngIf="pedidoRecente?.status === 'Aguardando Pagamento'">
+        <h3 style="margin-bottom: 15px; text-align: center; border-top: 1px solid #eee; padding-top: 20px; font-size: 1.1rem;">Como você prefere pagar?</h3>
+
+        <div class="payment-tabs">
+          <button [class.active]="metodoPagamentoSelecionado === 'pix'" (click)="metodoPagamentoSelecionado = 'pix'">PIX</button>
+          <button [class.active]="metodoPagamentoSelecionado === 'cartao'" (click)="metodoPagamentoSelecionado = 'cartao'">Cartão de Crédito</button>
+        </div>
+
+        <div *ngIf="metodoPagamentoSelecionado === 'pix'" class="payment-content" style="text-align: center;">
+          <p style="font-size: 0.85rem; color: #555; margin-bottom: 15px;">Escaneie o QR Code ou copie a chave para pagar <strong>{{ pedidoRecente?.totalFormatado }}</strong></p>
+          <img src="https://placehold.co/150x150/f9f9f9/333?text=QR+CODE+PIX" alt="QR Code PIX" style="border-radius: 8px; margin-bottom: 15px; border: 1px solid #ddd;">
+          
+          <button class="btn-black" style="background: #1e8e3e; border-color: #1e8e3e; transition: 0.3s;" 
+                  (click)="simularPagamento()" 
+                  [disabled]="processando"
+                  [style.opacity]="processando ? '0.7' : '1'">
+            {{ processando ? 'Aguardando confirmação do banco...' : 'Simular Pagamento Aprovado' }}
+          </button>
+        </div>
+
+        <div *ngIf="metodoPagamentoSelecionado === 'cartao'" class="payment-content">
+          <div class="input-group">
+            <label>Número do Cartão</label>
+            <input type="text" placeholder="0000 0000 0000 0000" style="background: #f9f9f9;">
+          </div>
+          <div class="input-group">
+            <label>Nome impresso no cartão</label>
+            <input type="text" placeholder="Ex: MARIA DA SILVA" style="background: #f9f9f9;">
+          </div>
+          <div class="input-row">
+            <div class="input-group" style="flex: 1;">
+              <label>Validade</label>
+              <input type="text" placeholder="MM/AA" style="background: #f9f9f9;">
+            </div>
+            <div class="input-group" style="flex: 1;">
+              <label>CVV</label>
+              <input type="text" placeholder="123" style="background: #f9f9f9;">
+            </div>
+          </div>
+          
+          <button class="btn-black" style="background: #1e8e3e; border-color: #1e8e3e; margin-top: 10px; transition: 0.3s;" 
+                  (click)="simularPagamento()" 
+                  [disabled]="processando"
+                  [style.opacity]="processando ? '0.7' : '1'">
+            {{ processando ? 'Processando cartão...' : 'Pagar ' + pedidoRecente?.totalFormatado }}
+          </button>
+        </div>
+      </div>
+      
+      <div *ngIf="pedidoRecente?.status === 'Pagamento Aprovado'" style="text-align: center; border-top: 1px solid #eee; padding-top: 25px; margin-top: 20px; animation: fadeIn 0.5s ease;">
+        <div style="width: 60px; height: 60px; background: #d4edda; color: #155724; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; font-size: 2rem;">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h3 style="color: #1e8e3e; margin-bottom: 10px;">Pagamento Confirmado!</h3>
+        <p style="font-size: 0.85rem; color: #555; line-height: 1.5;">Seu pedido já está sendo separado para envio.<br>Entregaremos para: <strong>{{ state.usuarioLogado?.bairro }}, Nº {{ state.usuarioLogado?.numero }}</strong></p>
+      </div>
+    </div>
+    
+    <button class="btn-outline" style="margin-top: 30px; border-color: #eee;" (click)="irPara('/')">Voltar para a Loja</button>
+  </div>
+</div>

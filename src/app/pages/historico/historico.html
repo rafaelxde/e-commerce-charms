@@ -1,0 +1,37 @@
+<div class="receipt-section">
+  <div class="receipt-box" style="max-width: 600px;">
+    <div class="receipt-header" style="border-bottom: none; margin-bottom: 0;">
+      <h2 style="font-size: 1.5rem;">MEUS PEDIDOS</h2>
+      <p>Acompanhe suas compras, {{ state.usuarioLogado?.email }}</p>
+    </div>
+    
+    <div class="receipt-body" style="margin-top: 20px;">
+      <div *ngIf="carregandoHistorico" style="text-align: center; padding: 20px; color: #666;">
+        Buscando seus pedidos...
+      </div>
+      
+      <div *ngIf="!carregandoHistorico && historicoPedidos.length === 0" style="text-align: center; padding: 30px; background: #fafafa; border-radius: 8px;">
+        <p style="color: #666; margin-bottom: 15px;">Você ainda não realizou nenhuma compra.</p>
+        <button class="btn-black" style="width: auto; padding: 10px 20px;" (click)="irPara('/')">Começar a comprar</button>
+      </div>
+      
+      <div *ngFor="let pedido of historicoPedidos" class="pedido-card">
+        <div class="pedido-card-header">
+          <strong>Em: {{ pedido.data | date:'dd/MM/yyyy HH:mm' }}</strong>
+          <span class="status-badge" [ngStyle]="{'background': pedido.status === 'Pagamento Aprovado' ? '#d4edda' : '#fff3cd', 'color': pedido.status === 'Pagamento Aprovado' ? '#155724' : '#856404'}" style="margin: 0;">
+            {{ pedido.status || 'Processando' }}
+          </span>
+        </div>
+        <div *ngFor="let item of pedido.itens" class="pedido-item-row">
+          <span>{{ item.qtd }}x {{ item.nome }} <small style="color:#888;">(Tam: {{ item.tamanho }})</small></span>
+          <span>{{ item.precoStr }}</span>
+        </div>
+        <div class="pedido-card-footer">
+          <span style="font-size: 0.8rem; color: #666; max-width: 60%;">Entregar em: {{ pedido.enderecoEntrega }}</span>
+          <strong>Total: {{ pedido.totalFormatado }}</strong>
+        </div>
+      </div>
+    </div>
+    <button class="btn-outline" style="margin-top: 20px;" (click)="irPara('/login')">Voltar para meu perfil</button>
+  </div>
+</div>

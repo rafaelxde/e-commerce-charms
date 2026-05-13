@@ -1,0 +1,121 @@
+<div class="auth-section">
+  <div class="auth-box" style="max-width: 900px; width: 90%; padding: 40px;" *ngIf="modoAdmin === 'lista'">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+       <h2>Gerenciar Estoque</h2>
+       <button class="btn-black" style="width: auto; padding: 10px 20px; background: #1e8e3e; border-color: #1e8e3e;" (click)="abrirCadastroAdmin()">+ Novo Produto</button>
+    </div>
+    
+    <input type="text" [(ngModel)]="termoBuscaAdmin" placeholder="Buscar produto para editar..." style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; font-family: 'Montserrat', sans-serif;">
+    
+    <div style="overflow-x: auto;">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Foto</th><th>Nome</th><th>Categoria</th><th>Estoque</th><th>Preço (Exibição)</th><th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prod of produtosAdminFiltrados">
+            <td>{{ prod.id }}</td>
+            <td><img [src]="prod.img" style="width: 40px; height: 50px; object-fit: cover; border-radius: 4px;" onerror="this.src='https://placehold.co/40x50/eaeaea/999'"></td>
+            <td style="font-weight: 500;">{{ prod.nome }}</td>
+            <td>{{ prod.categoria }}</td>
+            <td [ngStyle]="{'color': prod.estoque === 0 ? '#d93025' : '#1e8e3e', 'font-weight': 'bold'}">{{ prod.estoque }}</td>
+            <td>{{ prod.preco }}</td>
+            <td style="min-width: 150px;">
+               <button (click)="abrirEdicaoAdmin(prod)" style="background:none; border:none; cursor:pointer; color:#000; text-decoration:underline; margin-right: 15px; font-size: 0.8rem;">Editar</button>
+               
+               <button (click)="excluirProduto(prod.id)" 
+                       [ngStyle]="{'color': confirmarExclusaoId === prod.id ? '#fff' : '#d93025', 
+                                   'background': confirmarExclusaoId === prod.id ? '#d93025' : 'transparent', 
+                                   'padding': confirmarExclusaoId === prod.id ? '4px 10px' : '0', 
+                                   'border-radius': '4px', 
+                                   'text-decoration': confirmarExclusaoId === prod.id ? 'none' : 'underline'}" 
+                       style="border:none; cursor:pointer; font-size: 0.8rem; transition: 0.2s ease;">
+                 {{ confirmarExclusaoId === prod.id ? 'Tem certeza?' : 'Excluir' }}
+               </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn-outline" style="margin-top: 30px;" (click)="irPara('/')">Voltar à Loja</button>
+  </div>
+
+  <div class="auth-box" style="max-width: 600px;" *ngIf="modoAdmin === 'formulario'">
+    <h2>{{ produtoEditandoId ? 'Editar Produto' : 'Cadastrar Produto' }}</h2>
+    <p class="auth-subtitle">Preencha as informações abaixo</p>
+    
+    <div class="input-group">
+      <label>Nome do Produto</label>
+      <input type="text" [(ngModel)]="novoProduto.nome" placeholder="Ex: Vestido Floral Midi">
+    </div>
+    
+    <div class="input-row">
+      <div class="input-group" style="flex: 1;">
+        <label>Categoria</label>
+        <select [(ngModel)]="novoProduto.categoria" style="width: 100%; padding: 14px; border: 1px solid #ddd; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; background: #fff;">
+          <option *ngFor="let cat of categorias | slice:1" [value]="cat">{{ cat }}</option>
+        </select>
+      </div>
+      <div class="input-group" style="flex: 1;">
+        <label>Estoque Disponível</label>
+        <input type="number" [(ngModel)]="novoProduto.estoque" placeholder="Ex: 10">
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <label>Tamanhos (separados por vírgula)</label>
+      <input type="text" [(ngModel)]="novoProduto.tamanhos" placeholder="PP, P, M, G, GG">
+    </div>
+    
+    <div class="input-row">
+      <div class="input-group" style="flex: 1;">
+        <label>Preço Padrão/Base (R$)</label>
+        <input type="number" [(ngModel)]="novoProduto.preco" placeholder="Ex: 149.90">
+      </div>
+      <div class="input-group" style="flex: 1;">
+        <label>Preço Antigo (R$) - Opcional</label>
+        <input type="number" [(ngModel)]="novoProduto.precoAntigo" placeholder="Ex: 199.90">
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <label>Preços Específicos por Tamanho <span style="font-size:0.65rem; color:#888; text-transform:none;">(Deixe vazio para usar o Preço Padrão)</span></label>
+      <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+        <div *ngFor="let tam of tamanhosArrayAdmin" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+          <span style="width: 40px; font-weight: bold; text-align: right;">{{ tam }}:</span>
+          <input type="number" [(ngModel)]="novoProduto.precosTamanho[tam]" placeholder="Preço (R$)" style="flex: 1; padding: 10px; border: 1px solid #ccc; font-family: 'Montserrat', sans-serif; font-size: 0.9rem;">
+        </div>
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <label>Foto do Produto (Upload)</label>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <input type="file" (change)="uploadImagem($event)" accept="image/*" [disabled]="carregandoImagem" style="flex: 1; font-family: 'Montserrat', sans-serif;">
+        <div *ngIf="carregandoImagem" style="font-size: 0.8rem; color: #666;">Enviando...</div>
+      </div>
+      <p *ngIf="novoProduto.img" style="font-size: 0.7rem; color: #1e8e3e; margin-top: 5px;">✓ Imagem pronta para salvar</p>
+    </div>
+    
+    <div class="input-group">
+      <label>Imagens Extras (Separe as URLs por vírgula)</label>
+      <textarea [(ngModel)]="novoProduto.fotosExtras" placeholder="/produtos/foto2.png, /produtos/foto3.png" style="width: 100%; padding: 14px; border: 1px solid #ddd; outline: none; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; resize: vertical; min-height: 80px;"></textarea>
+    </div>
+    
+    <p *ngIf="mensagemErro" style="color: #d93025; font-size: 0.85rem; margin-bottom: 15px; text-align: center; font-weight: 500;">{{ mensagemErro }}</p>
+    <p *ngIf="mensagemSucesso" style="color: #1e8e3e; font-size: 0.9rem; margin-bottom: 15px; text-align: center; font-weight: bold; animation: fadeIn 0.3s ease;">✓ {{ mensagemSucesso }}</p>
+    
+    <div style="display: flex; gap: 15px;">
+      <button class="btn-outline" (click)="voltarParaListaAdmin()" [disabled]="salvando">Cancelar</button>
+      
+      <button class="btn-black" style="background: #1e8e3e; border-color: #1e8e3e; transition: 0.3s;" 
+              (click)="salvarProduto()" 
+              [disabled]="salvando || carregandoImagem"
+              [style.opacity]="(salvando || carregandoImagem) ? '0.7' : '1'">
+        {{ salvando ? 'Salvando...' : (produtoEditandoId ? 'Atualizar Produto' : 'Salvar Produto') }}
+      </button>
+    </div>
+  </div>
+</div>

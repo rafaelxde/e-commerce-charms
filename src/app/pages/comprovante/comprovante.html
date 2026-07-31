@@ -64,9 +64,9 @@
               <input type="text" placeholder="123" style="background: #f9f9f9;">
             </div>
           </div>
-          
+
           <button class="btn-black" style="background: #1e8e3e; border-color: #1e8e3e; margin-top: 10px; transition: 0.3s;" 
-                  (click)="simularPagamento()" 
+                  (click)="simularPagamento()"
                   [disabled]="processando"
                   [style.opacity]="processando ? '0.7' : '1'">
             {{ processando ? 'Processando cartão...' : 'Pagar ' + pedidoRecente?.totalFormatado }}

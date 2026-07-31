@@ -13,7 +13,7 @@ import { StateService } from '../../core/state';
 export class LojaComponent implements OnInit {
   public state = inject(StateService);
   private router = inject(Router);
-  
+
   // Ferramenta que manda o Angular redesenhar a tela
   private cdr = inject(ChangeDetectorRef);
 
@@ -42,7 +42,7 @@ export class LojaComponent implements OnInit {
           p.nome.toLowerCase().includes(termo) ||
           p.categoria.toLowerCase().includes(termo)
         );
-        
+
         if (this.categoriaSelecionada === 'Todos') {
           filtrados = filtrados.filter(p => !p.esconderNoTodos);
         } else {
@@ -67,7 +67,7 @@ export class LojaComponent implements OnInit {
 
   abrirPaginaProduto(produto: any) {
     (this.state as any).produtoAtual = { ...produto };
-    
+
     if (produto.preco && produto.preco.includes('A partir de')) {
        (this.state as any).produtoAtual.precoExibicao = produto.preco;
     } else {
@@ -82,7 +82,7 @@ export class LojaComponent implements OnInit {
     let msg = tipo === 'trocas'
       ? "Você tem até 7 dias após o recebimento para solicitar troca."
       : "Entregas em até 24h úteis para toda Mombaça.";
-    
+
     alert(msg);
   }
 }

@@ -50,17 +50,17 @@ export class StateService {
         this.db = getFirestore(firebaseApp);
         this.storage = getStorage(firebaseApp);
 
-        // O VIGIA: Ele roda toda vez que abre o site ou dá F5
+        //Ele roda toda vez que abre o site ou dá F5
         onAuthStateChanged(this.auth, async (user: any) => {
           if (user && user.email) {
             this.fbUserUid = user.uid;
             const docRef = doc(this.db, 'usuarios', user.email);
             const docSnap = await getDoc(docRef);
-            
+
             if (docSnap.exists()) {
               this.usuarioLogado = docSnap.data();
               this.isAdmin = this.usuarioLogado.isAdmin === true;
-              
+
               // Avisa os componentes que o usuário "voltou"
               this.loginCarregado.emit();
             }
@@ -91,7 +91,7 @@ export class StateService {
       try {
         const produtosRef = collection(this.db, 'produtos');
         const querySnapshot = await getDocs(produtosRef);
-        
+
         const produtosBanco: any[] = [];
         querySnapshot.forEach((doc) => {
           produtosBanco.push(doc.data());
@@ -100,30 +100,30 @@ export class StateService {
         produtosBanco.sort((a, b) => a.id - b.id);
         this.produtos = produtosBanco;
         this.produtosAtualizados.emit();
-        
+
       } catch (e) {
         console.error("Erro ao buscar produtos do banco:", e);
       }
     }
   }
 
-  get totalItensCarrinho() { 
-    return this.carrinho.reduce((acc, item) => acc + item.qtd, 0); 
+  get totalItensCarrinho() {
+    return this.carrinho.reduce((acc, item) => acc + item.qtd, 0);
   }
-  
+
   get valorTotalGeralFormatado() {
     const total = this.carrinho.reduce((acc, item) => acc + (item.precoNum * item.qtd), 0);
     return total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
-  esvaziarCarrinho() { 
-    this.carrinho = []; 
+  esvaziarCarrinho() {
+    this.carrinho = [];
   }
 
   async redefinirSenha(email: string) {
     if (!this.auth) return { sucesso: false, erro: 'Erro de conexão.' };
     try {
-      this.auth.languageCode = 'pt-BR'; 
+      this.auth.languageCode = 'pt-BR';
       await sendPasswordResetEmail(this.auth, email);
       return { sucesso: true };
     } catch (error: any) {

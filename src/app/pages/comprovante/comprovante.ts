@@ -30,7 +30,7 @@ export class ComprovanteComponent {
     try {
       // Verifica se temos o ID do pedido e a conexão com o banco
       if (this.pedidoRecente && this.pedidoRecente.id && this.state.db) {
-        
+    
         // 1. Atualiza o status oficialmente lá no Firebase
         const pedidoRef = doc(this.state.db, 'pedidos', this.pedidoRecente.id);
         await updateDoc(pedidoRef, {
@@ -50,13 +50,13 @@ export class ComprovanteComponent {
 
     } catch (error: any) {
       console.error("ERRO REAL DO FIREBASE:", error);
-      
+
       if (error.code === 'permission-denied') {
         alert("O Firebase bloqueou! Verifique a aba 'Regras' no painel do Firestore.");
       } else {
         alert("Erro ao processar: " + error.message);
       }
-      
+
       this.processando = false;
       this.cdr.detectChanges();
     }

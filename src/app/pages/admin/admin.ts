@@ -203,7 +203,7 @@ export class AdminComponent implements OnInit {
       console.error("Erro do Firebase:", error);
       
       // MOSTRA O ERRO NA TELA E DESTRAVA O BOTÃO
-      this.salvando = false; 
+      this.salvando = false;
       this.mensagemErro = "Erro ao salvar: Permissão negada pelas regras do Firebase.";
       this.cdr.detectChanges(); // Força a tela a atualizar para exibir o erro!
     }

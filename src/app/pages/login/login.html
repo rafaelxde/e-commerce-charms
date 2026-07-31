@@ -1,6 +1,6 @@
 <div class="auth-section">
   <div class="auth-box">
-    
+
     <!-- TELA QUANDO O USUÁRIO JÁ ESTÁ LOGADO -->
     <div *ngIf="state.usuarioLogado" class="logged-in-state">
       <div class="avatar-circle">
@@ -8,13 +8,13 @@
       </div>
       <h2>{{ state.isAdmin ? 'Painel de Acesso' : 'Olá, bem-vinda de volta!' }}</h2>
       <p>{{ state.usuarioLogado.email }}</p>
-      
+
       <div class="user-details" style="position: relative;" *ngIf="!state.isAdmin">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
           <p style="margin:0;"><strong>Meus Dados:</strong></p>
           <button *ngIf="!editandoEndereco" (click)="iniciarEdicaoEndereco()" style="background:none; border:none; color:#555; cursor:pointer; text-decoration:underline; font-size: 0.8rem;">Editar</button>
         </div>
-        
+
         <div *ngIf="!editandoEndereco">
           <p>Telefone: {{ state.usuarioLogado.telefone || 'Não informado' }}</p>
           <p>{{ state.usuarioLogado.bairro }}, Nº {{ state.usuarioLogado.numero }}</p>
@@ -26,7 +26,7 @@
           <input type="text" [(ngModel)]="editBairro" placeholder="Bairro" style="width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ccc; font-family: 'Montserrat', sans-serif;">
           <input type="text" [(ngModel)]="editNumero" placeholder="Número" style="width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ccc; font-family: 'Montserrat', sans-serif;">
           <input type="text" [(ngModel)]="editComp" placeholder="Complemento" style="width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ccc; font-family: 'Montserrat', sans-serif;">
-          
+
           <div style="display: flex; gap: 10px;">
             <button class="btn-outline" style="padding: 10px;" (click)="editandoEndereco = false">Cancelar</button>
             <button class="btn-black" style="padding: 10px;" (click)="salvarEndereco()">Atualizar</button>
@@ -70,7 +70,7 @@
 
     <!-- ÁREA PRINCIPAL: LOGIN, CADASTRO OU RECUPERAÇÃO DE SENHA -->
     <div *ngIf="!state.usuarioLogado && !completandoCadastroGoogle">
-      
+
       <!-- EXIBE FORMULÁRIO NORMAL SE NÃO ESTIVER EM RECUPERAÇÃO -->
       <div *ngIf="!modoRecuperacao">
         <h2>{{ modoAuth === 'login' ? 'Acesse sua conta' : 'Criar nova conta' }}</h2>
@@ -81,15 +81,15 @@
             <label>E-mail</label>
             <input type="email" name="email" [(ngModel)]="authEmail" (blur)="validarEmail()" placeholder="exemplo@email.com" required>
           </div>
-          
+
           <!-- NOVO: ESTRUTURA DO CAMPO DE SENHA COM O OLHINHO CORRIGIDO E FOCADO -->
           <div class="input-group">
             <label>Senha</label>
             <div style="position: relative; width: 100%;">
-              
+
               <!-- 1. Adicionamos o #inputSenha aqui -->
               <input #inputSenha [type]="mostrarSenha ? 'text' : 'password'" name="senha" [(ngModel)]="authSenha" placeholder="Sua senha" required style="width: 100%; padding-right: 40px; box-sizing: border-box;">
-              
+
               <!-- 2. Usamos o (click) normal e mandamos ele focar no input logo em seguida! -->
               <button type="button" (click)="alternarSenha(); inputSenha.focus()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #666; display: flex; align-items: center; justify-content: center; padding: 0;">
                 <span *ngIf="!mostrarSenha" style="display: flex;">
@@ -99,7 +99,7 @@
                   <i data-lucide="eye-off" style="width: 20px; height: 20px;"></i>
                 </span>
               </button>
-              
+
             </div>
           </div>
 
@@ -144,20 +144,20 @@
       <div *ngIf="modoRecuperacao" style="animation: fadeIn 0.3s ease;">
         <h3 style="margin-bottom: 10px;">Recuperar Senha</h3>
         <p style="font-size: 0.9rem; color: #555; margin-bottom: 20px;">Digite o e-mail cadastrado e enviaremos um link seguro para você criar uma nova senha.</p>
-        
+
         <div class="input-group">
           <label>Seu E-mail</label>
           <input type="email" [(ngModel)]="emailRecuperacao" placeholder="exemplo@email.com">
         </div>
-        
+
         <p *ngIf="erroRecuperacao" style="color: #d93025; font-size: 0.85rem; margin-bottom: 15px;">{{ erroRecuperacao }}</p>
         <p *ngIf="mensagemRecuperacao" style="color: #1e8e3e; font-size: 0.85rem; margin-bottom: 15px; font-weight: bold;">✓ {{ mensagemRecuperacao }}</p>
-        
+
         <div style="display: flex; gap: 15px;">
           <button class="btn-outline" (click)="alternarModoRecuperacao()" [disabled]="enviandoRecuperacao">Cancelar</button>
-          
-          <button class="btn-black" 
-            (click)="enviarLinkRecuperacao()" 
+
+          <button class="btn-black"
+            (click)="enviarLinkRecuperacao()"
             [disabled]="enviandoRecuperacao || segundosRestantes > 0"
             [style.opacity]="(enviandoRecuperacao || segundosRestantes > 0) ? '0.7' : '1'">
             {{ enviandoRecuperacao ? 'Enviando...' : (segundosRestantes > 0 ? 'Aguarde ' + segundosRestantes + 's' : 'Receber Link') }}
